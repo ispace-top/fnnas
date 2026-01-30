@@ -33,7 +33,6 @@ on:
           - first50
           - from50
           - last20
-          - nanopc-t4_fine3399-plus
           - a311d-oes_s922x-oes-plus_wxy-oect
           - nsy-g16-plus_nsy-g68-plus_bdy-g18-pro
           - s905d_s905x3_s912_s922x-ct2000
@@ -56,7 +55,6 @@ on:
           - eaidk-610
           - emb3531
           - fine3399
-          - fine3399-plus
           - firefly-rk3399
           - fmx1-pro
           - gzpeite-p01
@@ -78,7 +76,6 @@ on:
           - lx-r3s
           - lz-k3568
           - mrkaio-m68s
-          - nanopc-t4
           - nanopc-t6
           - nanopi-m5
           - nanopi-r5c
@@ -403,12 +400,13 @@ jobs:
           [[ -n "${fnnas_storage}" ]] || fnnas_storage="fnnas_save"
           echo "build_tag=${fnnas_storage}" >> ${GITHUB_ENV}
           ln -sf /builder/fnnas ${{ github.workspace }}/fnnas
+          ln -sf /builder/fnnas /home/runner/work/_actions/ophub/fnnas/main/fnnas
 
           echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Packaging fnnas
         if: ${{ steps.down.outputs.status }} == 'success' && !cancelled()
-        uses: ./
+        uses: ophub/fnnas@main
         with:
           fnnas_path: fnnas/*.img.xz
           fnnas_board: ${{ inputs.fnnas_board }}

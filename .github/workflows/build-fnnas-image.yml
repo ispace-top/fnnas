@@ -12,17 +12,18 @@ on:
       fnnas_base_version:
         description: "Select fnnas base image version"
         required: false
-        default: "amlogic_338"
+        default: "rockchip_448"
         type: choice
         options:
-          - amlogic_338
-          - amlogic_322
-          - amlogic_300
+          - amlogic_470
+          - amlogic_453
+          - amlogic_389
+          - allwinner_455
           - allwinner_335
           - allwinner_317
+          - rockchip_448
+          - rockchip_388
           - rockchip_330
-          - rockchip_321
-          - rockchip_296
       fnnas_board:
         description: "Select fnnas device board"
         required: false
@@ -407,7 +408,7 @@ jobs:
           echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Packaging fnnas
-        if: ${{ steps.down.outputs.status }} == 'success' && !cancelled()
+        if: ${{ steps.down.outputs.status == 'success' && !cancelled() }}
         uses: ./
         with:
           fnnas_path: fnnas/*.img.xz
@@ -419,7 +420,7 @@ jobs:
 
       - name: Upload the packaged fnnas
         uses: ncipollo/release-action@main
-        if: ${{ env.PACKAGED_STATUS }} == 'success' && !cancelled()
+        if: ${{ env.PACKAGED_STATUS == 'success' && !cancelled() }}
         with:
           tag: ${{ env.build_tag }}
           artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*

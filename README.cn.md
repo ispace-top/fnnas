@@ -48,7 +48,7 @@
 | rk3328 | [BeikeYun](https://github.com/ophub/amlogic-s9xxx-armbian/issues/852), [Chainedbox-L1-Pro](https://github.com/ophub/amlogic-s9xxx-armbian/issues/1680), [Station-M1](https://github.com/ophub/amlogic-s9xxx-armbian/issues/1313), [Bqeel-MVR9](https://github.com/ophub/amlogic-s9xxx-armbian/issues/1313), [Renegade/Firefly](https://github.com/ophub/amlogic-s9xxx-armbian/issues/1861) | [fnnas](https://github.com/ophub/fnnas/releases/tag/kernel_fnnas) |
 | rk3318 | [RX3318-Box](https://github.com/ophub/amlogic-s9xxx-armbian/pull/2129) | [fnnas](https://github.com/ophub/fnnas/releases/tag/kernel_fnnas) |
 | h6 | [Vplus](https://github.com/ophub/amlogic-s9xxx-armbian/issues/1100), [Tanix-TX6](https://github.com/ophub/amlogic-s9xxx-armbian/issues/1120), [TQC-A01](https://github.com/ophub/amlogic-s9xxx-armbian/pull/1638) | [fnnas](https://github.com/ophub/fnnas/releases/tag/kernel_fnnas) |
-| h618 | [OrangePi-Zero3](https://github.com/ophub/fnnas/issues/158), [OrangePi-Zero-2W](https://github.com/ophub/fnnas/issues/325) | [fnnas](https://github.com/ophub/fnnas/releases/tag/kernel_fnnas) |
+| h618 | [OrangePi-Zero3](https://github.com/ophub/fnnas/issues/158) | [fnnas](https://github.com/ophub/fnnas/releases/tag/kernel_fnnas) |
 
 > [!TIP]
 > 目前 [s905 的盒子](https://github.com/ophub/amlogic-s9xxx-armbian/issues/1173)只能在 `TF/SD/USB` 中使用，其他型号的盒子支持写入 `eMMC` 中使用。更多信息请查阅 [✅支持的设备列表说明](make-fnnas/fnnas-files/common-files/etc/model_database.conf)。可以参考说明文档中 12.15 章节的方法[添加新的支持设备](https://github.com/ophub/amlogic-s9xxx-armbian/blob/main/documents/README.cn.md#1215-如何添加新的支持设备)。

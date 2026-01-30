@@ -220,15 +220,17 @@ on:
         type: choice
         options:
           - 6.12.y
+          - 6.18.y
+          - 6.12.y_6.18.y
       auto_kernel:
         description: "Auto use the latest kernel"
         required: false
         default: true
         type: boolean
-      fnnas_storage:
-        description: "Set fnnas image releases tags"
+      rootfs_expand:
+        description: "Set rootfs expansion size(GiB)"
         required: false
-        default: "fnnas_save"
+        default: "16"
       fnnas_url:
         description: "Custom fnnas image download url"
         required: false

@@ -306,26 +306,35 @@ check_data() {
     }
 
     # Get the kernel array from the model configuration file
+    # Collect both KERNEL_TAGS (column 9) and PLATFORM (column 10) to map tags to platform-based downloads
     kernel_from=($(
         cat ${model_conf} |
             sed -e 's/NA//g' -e 's/NULL//g' -e 's/[ ][ ]*//g' |
-            grep -E "^[^#].*${board_list}$" | awk -F':' '{print $9}' |
+            grep -E "^[^#].*${board_list}$" | awk -F':' '{print $9":"$10}' |
             sort -u | xargs
     ))
     [[ "${#kernel_from[@]}" -eq 0 ]] && error_msg "Missing [ KERNEL_TAGS ] settings, stop building."
 
     # Convert the kernel_from to the kernel array
+    # Format: KERNEL_TAGS:PLATFORM (e.g., "stable/all:amlogic", "rk3588/6.1.y:rockchip")
     for item in "${kernel_from[@]}"; do
-        # Split the key and value
-        IFS='/' read -r key value <<<"${item}"
+        # Split by colon to get KERNEL_TAGS and PLATFORM
+        IFS=':' read -r kernel_tags platform <<<"${item}"
+        # Split KERNEL_TAGS by slash to get tag and version
+        IFS='/' read -r tag version <<<"${kernel_tags}"
 
-        # Check if the value is "all".
-        if [[ "${value}" == "all" ]]; then
-            # If the value is "all", assign the value of ${key}_kernel. such as [ amlogic_kernel, rockchip_kernel, etc. ]
-            eval "value=\"\${${key}_kernel[@]}\""
-        elif [[ "${value}" =~ ^[1-9]+ ]]; then
-            IFS='_' read -ra value <<<"${value}"
+        # Use PLATFORM as the key (matching release file naming: 6.12.y-amlogic.tar.gz)
+        key="${platform}"
+
+        # Check if the version is "all".
+        if [[ "${version}" == "all" ]]; then
+            # If the version is "all", assign the value of ${platform}_kernel. such as [ amlogic_kernel, rockchip_kernel, etc. ]
+            eval "value=\"\${${platform}_kernel[@]}\""
+        elif [[ "${version}" =~ ^[1-9]+ ]]; then
+            IFS='_' read -ra value <<<"${version}"
             value="${value[@]}"
+        else
+            value="${version}"
         fi
 
         # If auto_kernel is false, use the value from -k parameter

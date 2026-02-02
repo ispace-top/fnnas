@@ -152,9 +152,11 @@ jobs:
 
           echo "status=success" >> ${GITHUB_OUTPUT}
 
-      - name: Compile the fnnas kernel
+
+      - name: Compile the fnnas kernel [ ${{ inputs.debs_version }} ]
         uses: ophub/fnnas@main
-        if: ${{ steps.down.outputs.status == 'success' && !cancelled() }}
+        if: ${{ steps.down.outputs.status  == 'success' && !cancelled() }}
+
         with:
           build_target: kernel
           fnnas_path: fnnas/*.img.xz

@@ -12,13 +12,17 @@ on:
       fnnas_base_version:
         description: "Select fnnas base image version"
         required: false
-        default: "rockchip_485"
+        default: "amlogic_338"
         type: choice
         options:
-          - allwinner_489
-          - amlogic_488
-          - rockchip_485
-          - rockchip_484
+          - amlogic_338
+          - amlogic_322
+          - amlogic_300
+          - allwinner_335
+          - allwinner_317
+          - rockchip_330
+          - rockchip_321
+          - rockchip_296
       fnnas_board:
         description: "Select fnnas device board"
         required: false
@@ -38,7 +42,6 @@ on:
           - alark35-3500
           - anas3035
           - aio-3399b
-          - bdkj-bd-one
           - bdy-g18-pro
           - beikeyun
           - chainedbox
@@ -184,7 +187,6 @@ on:
           - smart-am60
           - station-m1
           - station-m2
-          - station-p2
           - sv-33a6x
           - swan1-w28
           - sw799
@@ -217,17 +219,15 @@ on:
         type: choice
         options:
           - 6.12.y
-          - 6.18.y
-          - 6.12.y_6.18.y
       auto_kernel:
         description: "Auto use the latest kernel"
         required: false
         default: true
         type: boolean
-      rootfs_expand:
-        description: "Set rootfs expansion size(GiB)"
+      fnnas_storage:
+        description: "Set fnnas image releases tags"
         required: false
-        default: "16"
+        default: "fnnas_save"
       fnnas_url:
         description: "Custom fnnas image download url"
         required: false
@@ -407,8 +407,7 @@ jobs:
           echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Packaging fnnas
-
-        if: ${{ steps.down.outputs.status == 'success' && !cancelled() }}
+        if: ${{ steps.down.outputs.status }} == 'success' && !cancelled()
         uses: ./
         with:
           fnnas_path: fnnas/*.img.xz
@@ -420,7 +419,7 @@ jobs:
 
       - name: Upload the packaged fnnas
         uses: ncipollo/release-action@main
-        if: ${{ env.PACKAGED_STATUS == 'success' && !cancelled() }}
+        if: ${{ env.PACKAGED_STATUS }} == 'success' && !cancelled()
         with:
           tag: ${{ env.build_tag }}
           artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*

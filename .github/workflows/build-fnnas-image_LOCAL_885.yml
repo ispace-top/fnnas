@@ -412,9 +412,13 @@ jobs:
           echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Packaging fnnas
-
+<<<<<<< HEAD
         if: ${{ steps.down.outputs.status == 'success' && !cancelled() }}
+        uses: ophub/fnnas@main
+=======
+        if: ${{ steps.down.outputs.status }} == 'success' && !cancelled()
         uses: ./
+>>>>>>> 8e4cd50 (Fix: GitHub Actions 使用本地 action 定义)
         with:
           fnnas_path: fnnas/*.img.xz
           fnnas_board: ${{ inputs.fnnas_board }}
